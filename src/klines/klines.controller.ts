@@ -11,32 +11,34 @@ export class KlinesController {
   analyzeKlines(
     @Query('symbol') symbol: string,
     @Query('interval', new ParseEnumPipe(Interval)) interval: Interval,
-    @Query('limit') limit: number = 1000,
     @Query('startTime') startTime: number,
     @Query('endTime') endTime: number,
+    @Query('limit') limit: number,
   ): Promise<KlinesAnalysis> {
     return this.klinesService.analyzeKlines(
       symbol,
       interval,
-      limit,
       startTime,
       endTime,
+      limit,
     );
   }
+
   @Get()
   getKlines(
     @Query('symbol') symbol: string,
     @Query('interval', new ParseEnumPipe(Interval)) interval: Interval,
-    @Query('limit') limit: number = 1000,
     @Query('startTime') startTime: number,
     @Query('endTime') endTime: number,
+    @Query('limit') limit: number,
+
   ): Promise<string[][]> {
     return this.klinesService.getKlines(
       symbol,
       interval,
-      limit,
       startTime,
       endTime,
+      limit,
     );
   }
 }
