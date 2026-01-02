@@ -12,6 +12,10 @@ export class KlinesService {
             throw new BadRequestException('Missing required parameters');
         }
 
+        if(!Object.values(Interval).includes(interval)) {
+            throw new BadRequestException('Invalid interval');
+        }
+
         const baseUrl = this.configService.get('BINANCE_API_URL');
         const response = await axios.get(`${baseUrl}klines`, {
             params: {
@@ -26,10 +30,6 @@ export class KlinesService {
     }
 
     async analyzeKlines(symbol: string, interval: Interval, limit: number, startTime: number, endTime: number): Promise<KlinesAnalysis> {
-        if(!symbol || !interval) {
-            throw new BadRequestException('Missing required parameters');
-        }
-
         const klines = await this.getKlines(symbol, interval, limit, startTime, endTime);
         if(!klines){
             throw new NotFoundException('No klines found');

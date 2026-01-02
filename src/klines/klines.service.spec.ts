@@ -3,6 +3,7 @@ import { KlinesService } from './klines.service';
 import { Interval } from './types/klines.types';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import axios from 'axios';
+import { BadRequestException } from '@nestjs/common';
 
 jest.mock('axios');
 const mockAxios = axios as jest.Mocked<typeof axios>;
@@ -66,5 +67,13 @@ describe('KlinesService', () => {
     expect(analysis.priceAnalysis).toBeDefined();
     expect(analysis.volumeAnalysis).toBeDefined();
     expect(analysis.tradeAnalysis).toBeDefined();
+  });
+
+  it('should throw an error if the symbol is missing', async () => {
+    await expect(service.getKlines('', Interval.ONE_MINUTE, 1000, 1714358400000, 1714358400000)).rejects.toThrow('Missing required parameters');
+  });
+
+  it('should throw an error if the interval is invalid', async () => {
+    await expect(service.getKlines('BTCUSDT', '12m' as any, 1000, 1714358400000, 1714358400000)).rejects.toThrow(BadRequestException);
   });
 });
