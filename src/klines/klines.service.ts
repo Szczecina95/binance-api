@@ -1,13 +1,13 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import axios from 'axios';
-import { Interval } from './types/klines.types';
+import { Interval, KlinesAnalysis } from './types/klines.types';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class KlinesService {
     constructor(private readonly configService: ConfigService) {}
 
-    async getKlines(symbol: string, interval: Interval, limit: number, startTime: number, endTime: number) {
+    async getKlines(symbol: string, interval: Interval, limit: number, startTime: number, endTime: number): Promise<string[][]> {
         if(!symbol || !interval) {
             throw new BadRequestException('Missing required parameters');
         }
@@ -25,7 +25,7 @@ export class KlinesService {
         return response.data;
     }
 
-    async analyzeKlines(symbol: string, interval: Interval, limit: number, startTime: number, endTime: number) {
+    async analyzeKlines(symbol: string, interval: Interval, limit: number, startTime: number, endTime: number): Promise<KlinesAnalysis> {
         if(!symbol || !interval) {
             throw new BadRequestException('Missing required parameters');
         }

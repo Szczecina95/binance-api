@@ -12,3 +12,28 @@ export enum Interval {
     TWELVE_HOURS = '12h',
     ONE_DAY = '1d',
 }
+
+export interface PriceAnalysis {
+    minPrice: number;
+    maxPrice: number;
+    priceChange: number;
+    openPrice: number;
+    closePrice: number;
+    pricePercentageChange: number;
+    priceRange: number;
+}
+
+export interface VolumeAnalysis {
+    totalVolume: number;
+    averageVolume: number;
+}
+
+export interface TradeAnalysis {
+    totalTrades: number;
+}
+
+export interface KlinesAnalysis {
+    priceAnalysis: PriceAnalysis;
+    volumeAnalysis: VolumeAnalysis;
+    tradeAnalysis: TradeAnalysis;
+}
