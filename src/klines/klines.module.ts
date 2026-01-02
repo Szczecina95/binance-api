@@ -4,6 +4,6 @@ import { KlinesController } from './klines.controller';
 
 @Module({
   providers: [KlinesService],
-  controllers: [KlinesController]
+  controllers: [KlinesController],
 })
 export class KlinesModule {}

@@ -5,9 +5,12 @@ import { KlinesModule } from './klines/klines.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule.forRoot({
-    isGlobal: true,
-  }), KlinesModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    KlinesModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
