@@ -59,4 +59,12 @@ describe('KlinesService', () => {
     expect(klines).toBeDefined();
     expect(axios.get).toHaveBeenCalled();
   });
+
+  it('should analyze the klines', async () => {
+    const analysis = await service.analyzeKlines('BTCUSDT', Interval.ONE_MINUTE, 1000, 1714358400000, 1714358400000);
+    expect(analysis).toBeDefined();
+    expect(analysis.priceAnalysis).toBeDefined();
+    expect(analysis.volumeAnalysis).toBeDefined();
+    expect(analysis.tradeAnalysis).toBeDefined();
+  });
 });
