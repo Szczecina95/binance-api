@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import axios from 'axios';
-import { Interval, KlinesAnalysis } from './types/klines.types';
+import { Interval, KlinesAnalysis, KlinesParams } from './types/klines.types';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -14,9 +14,9 @@ export class KlinesService {
   async getKlines(
     symbol: string,
     interval: Interval,
-    startTime: number,
-    endTime: number,
-    limit: number,
+    startTime?: number,
+    endTime?: number,
+    limit?: number,
   ): Promise<string[][]> {
     if (!symbol || !interval) {
       throw new BadRequestException('Missing required parameters');
@@ -27,14 +27,14 @@ export class KlinesService {
     }
 
     const baseUrl = this.configService.get('BINANCE_API_URL');
-    const params: { symbol: string; interval: Interval; startTime?: number; endTime?: number; limit?: number } = {
+    const params: KlinesParams = {
         symbol,
         interval,
     }
     
-    if(startTime) params.startTime = startTime;
-    if(endTime) params.endTime = endTime;
-    if(limit) params.limit = limit;
+    if (startTime) params.startTime = startTime.toString();
+    if (endTime) params.endTime = endTime.toString();
+    if (limit) params.limit = limit.toString();    
 
     const response = await axios.get(`${baseUrl}klines`, { params });
     return response.data;
@@ -43,9 +43,9 @@ export class KlinesService {
   async analyzeKlines(
     symbol: string,
     interval: Interval,
-    startTime: number,
-    endTime: number,
-    limit: number = 1000,
+    startTime?: number,
+    endTime?: number,
+    limit?: number,
 
   ): Promise<KlinesAnalysis> {
     const klines = await this.getKlines(

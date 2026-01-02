@@ -13,6 +13,14 @@ export enum Interval {
   ONE_DAY = '1d',
 }
 
+export type KlinesParams = {
+  symbol: string;
+  interval: Interval;
+  startTime?: string;
+  endTime?: string;
+  limit?: string;
+}
+
 export interface PriceAnalysis {
   minPrice: number;
   maxPrice: number;

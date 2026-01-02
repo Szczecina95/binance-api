@@ -11,9 +11,9 @@ export class KlinesController {
   analyzeKlines(
     @Query('symbol') symbol: string,
     @Query('interval', new ParseEnumPipe(Interval)) interval: Interval,
-    @Query('startTime') startTime: number,
-    @Query('endTime') endTime: number,
-    @Query('limit') limit: number,
+    @Query('startTime') startTime?: number,
+    @Query('endTime') endTime?: number,
+    @Query('limit') limit?: number,
   ): Promise<KlinesAnalysis> {
     return this.klinesService.analyzeKlines(
       symbol,
